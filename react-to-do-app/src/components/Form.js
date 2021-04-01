@@ -1,4 +1,6 @@
 import React from 'react';
+import {getDataFromEndPoint} from './../services/fetch';
+
  
 const Form = ({ inputText, setInputText, setTodos, todos, setStatus  }) => {
     const inputTextHandler = (e) => {
@@ -15,15 +17,9 @@ const Form = ({ inputText, setInputText, setTodos, todos, setStatus  }) => {
     const statusHandler = (e) => {
         setStatus(e.target.value);
     };
-    const getDataFromEndPoint = (e) => {
+    const submitCloudRequest = (e) => {
         e.preventDefault();
-        fetch('https://jsonplaceholder.typicode.com/todos')
-        .then(response => response.json())
-        .then(data => {
-            data.forEach(element => {
-                console.log(element);
-            });
-        });
+        getDataFromEndPoint(setTodos);
     };
 
 
@@ -33,14 +29,14 @@ const Form = ({ inputText, setInputText, setTodos, todos, setStatus  }) => {
             <button onClick={submitTodoHandler} className="todo-input" type="submit">
                 <i className="fas fa-plus square"></i>
             </button>
-            <button onClick={getDataFromEndPoint} className="todo-input" type="submit">
+            <button onClick={submitCloudRequest} className="todo-input" type="submit">
                 <i className="fas fa-cloud-download-alt"></i>
             </button>
             <div className="select">
                 <select onChange={statusHandler} name="todos" className="filter-todo">
-                <option value="all">All</option>
-                <option value="completed">Completed</option>
-                <option value="uncompleted">Uncompleted</option>
+                    <option value="all">All</option>
+                    <option value="completed">Completed</option>
+                    <option value="uncompleted">Uncompleted</option>
                 </select>
             </div>
         </form>
